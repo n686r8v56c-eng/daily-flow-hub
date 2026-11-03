@@ -4,7 +4,7 @@ import {ChevronDown,ExternalLink,Settings2,X,Check,Link2,ShieldCheck,RefreshCw,M
 import './style.css';
 
 const HUB = "Daily Flow";
-const MODES = [["focus","Focus","https://focus-flow-3f0.pages.dev/"],["care","Care","https://care-log-aqs.pages.dev/"],["beauty","Beauty Care",""],["project90","90 Day Project","https://90-day-project-flow.pages.dev/"]].map(([id,label,url])=>({id,label,defaultUrl:url}));
+const MODES = [["focus","Focus","https://focus-flow-3f0.pages.dev/"],["care","Care","https://care-log-aqs.pages.dev/"],["beauty","Beauty Care",""],["project90","90 Day Project","https://90-day-project-flow.pages.dev/"],["mind","Mind","https://mind-flow-4r3.pages.dev/"]].map(([id,label,url])=>({id,label,defaultUrl:url}));
 const STORAGE_KEY = 'flow-hub-links-v1-' + HUB.toLowerCase().replace(/\W+/g,'-');
 const sanitizeUrl = value => {
   try {
