@@ -5,7 +5,7 @@ import './style.css';
 import {ArchiveManager,readArchived} from './ArchiveManager';
 
 const HUB = "Daily Flow";
-const MODES = [["focus","Focus","https://focus-flow-3f0.pages.dev/"],["beauty","Beauty Care",""],["care","Care","https://care-log-aqs.pages.dev/"],["mind","Mind","https://mind-flow-4r3.pages.dev/"],["project90","90 Day Project","https://90-day-project-flow.pages.dev/"]].map(([id,label,url])=>({id,label,defaultUrl:url}));
+const MODES = [["focus","Focus","https://focus-flow-3f0.pages.dev/"],["beauty","Beauty Care",""],["body","Body Care Studio","https://body-care-studio.pages.dev/"],["care","Care","https://care-log-aqs.pages.dev/"],["mind","Mind","https://mind-flow-4r3.pages.dev/"],["project90","90 Day Project","https://90-day-project-flow.pages.dev/"]].map(([id,label,url])=>({id,label,defaultUrl:url}));
 const STORAGE_KEY = 'flow-hub-links-v1-' + HUB.toLowerCase().replace(/\W+/g,'-');
 const sanitizeUrl = value => {
   try {
