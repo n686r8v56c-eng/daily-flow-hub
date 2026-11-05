@@ -5,7 +5,7 @@ import './style.css';
 import {ArchiveManager,readArchived} from './ArchiveManager';
 
 const HUB = "Daily Flow";
-const MODES = [["focus","Focus","https://focus-flow-3f0.pages.dev/"],["beauty","Beauty Care",""],["body","Body Care Studio","https://body-care-studio-v2.pages.dev/"],["voice","Voice Flow","https://voice-flow-1wj.pages.dev/"],["write","Write Flow","https://write-flow.pages.dev/"],["spend","Spend Flow","https://spend-flow.pages.dev/"],["care","Care","https://care-log-aqs.pages.dev/"],["mind","Mind","https://mind-flow-4r3.pages.dev/"],["project90","90 Day Project","https://90-day-project-flow.pages.dev/"]].map(([id,label,url])=>({id,label,defaultUrl:url}));
+const MODES = [["focus","Focus","https://focus-flow-3f0.pages.dev/"],["beauty","Beauty Care",""],["body","Body Care","https://body-care-studio-v2.pages.dev/"],["voice","Voice Flow","https://voice-flow-1wj.pages.dev/"],["write","Write Flow","https://write-flow.pages.dev/"],["spend","Spend Flow","https://spend-flow.pages.dev/"],["care","Care","https://care-log-aqs.pages.dev/"],["mind","Mind","https://mind-flow-4r3.pages.dev/"],["project90","90 Day Project","https://90-day-project-flow.pages.dev/"]].map(([id,label,url])=>({id,label,defaultUrl:url}));
 const STORAGE_KEY = 'flow-hub-links-v1-' + HUB.toLowerCase().replace(/\W+/g,'-');
 const sanitizeUrl = value => {
   try {
