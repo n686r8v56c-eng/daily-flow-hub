@@ -31,10 +31,10 @@ function App() {
   const [selected,setSelected] = useState(()=>visibleModes.some(m=>m.id===initial)?initial:(visibleModes[0]?.id||''));
   const [links,setLinks] = useState(()=>{
     const saved=readSaved();
-    // Old default URL may have been manually saved. Move only that old app URL
-    // to the new deployment while preserving arbitrary personal overrides.
-    if(sanitizeUrl(saved.body||'')==='https://body-care-studio.pages.dev/'){
-      saved.body='https://body-care-studio-v2.pages.dev/';
+    // Body Care is permanently v2. Clear any old per-device override,
+    // including alternate paths/query strings of the retired v1 deployment.
+    if (Object.prototype.hasOwnProperty.call(saved,'body')) {
+      delete saved.body;
       try{localStorage.setItem(STORAGE_KEY,JSON.stringify(saved))}catch{}
     }
     return saved;
@@ -43,7 +43,7 @@ function App() {
   const [draft,setDraft] = useState('');
   const [error,setError] = useState('');
   const current = visibleModes.find(m=>m.id===selected)||{id:'',label:'보관함',defaultUrl:''};
-  const activeUrl = selected && sanitizeUrl(Object.prototype.hasOwnProperty.call(links,selected)?String(links[selected]||''):current.defaultUrl);
+  const activeUrl = selected && sanitizeUrl(selected==='body' ? 'https://body-care-studio-v2.pages.dev/' : Object.prototype.hasOwnProperty.call(links,selected)?String(links[selected]||''):current.defaultUrl);
   useEffect(()=>{
     const params = new URLSearchParams(window.location.search);
     if(selected)params.set('app',selected);else params.delete('app');
@@ -63,7 +63,8 @@ function App() {
     e.preventDefault();
     const url = draft.trim()?sanitizeUrl(draft):'';
     if (draft.trim() && !url) {setError('https://로 시작하는 올바른 주소를 입력해 줘.');return;}
-    const next={...links,[selected]:url};
+    if(selected==='body'&&url&&url!=='https://body-care-studio-v2.pages.dev/'){setError('Body Care는 v2 주소만 사용할 수 있어.');return;}
+    const next={...links,[selected]:selected==='body'?'https://body-care-studio-v2.pages.dev/':url};
     try {localStorage.setItem(STORAGE_KEY,JSON.stringify(next));} catch {setError('브라우저 저장 공간을 확인해 줘.');return;}
     setLinks(next);setSettings(false);setError('');
   }
@@ -80,7 +81,7 @@ function App() {
       </div>
       <div className="top-actions">
         <label className="mode-select"><span className="sr-only">앱 선택</span>
-          <select value={selected} onChange={e=>{if(e.target.value==='__archive__'){setSettings(false);setArchiveOpen(true)}else {const id=e.target.value;setSelected(id);const mode=visibleModes.find(m=>m.id===id);const url=sanitizeUrl(Object.prototype.hasOwnProperty.call(links,id)?String(links[id]||''):mode?.defaultUrl||'');if(url)window.location.assign(url);}}} aria-label="앱 전환">
+          <select value={selected} onChange={e=>{if(e.target.value==='__archive__'){setSettings(false);setArchiveOpen(true)}else {const id=e.target.value;setSelected(id);const mode=visibleModes.find(m=>m.id===id);const url=sanitizeUrl(id==='body'?'https://body-care-studio-v2.pages.dev/':Object.prototype.hasOwnProperty.call(links,id)?String(links[id]||''):mode?.defaultUrl||'');if(url)window.location.assign(url);}}} aria-label="앱 전환">
             {!selected&&<option value="" disabled>사용 중인 프로젝트 없음</option>}
             {visibleModes.map(m=><option key={m.id} value={m.id}>{m.label}</option>)}
             <option value="__archive__">보관함 · {archived.length}개</option>
